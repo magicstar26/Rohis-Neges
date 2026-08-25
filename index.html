@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expo Rohis SMAN 1 Gegesik</title>
+    <link rel="icon" type="image/jpeg" href="habsyi.jpg">
     <style>
         /* Mengatur Font dan Reset Dasar */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
@@ -140,7 +141,7 @@
             content: '🕌';
             position: absolute;
             font-size: 180px;
-            opacity: 0.04;
+            opacity: 0.09;
             right: -20px;
             bottom: -40px;
             z-index: -1;
@@ -487,7 +488,7 @@
                 <div class="card-front">
                     <div class="card-icon">🥁</div>
                     <div>
-                        <h3 class="hadroh-title">HADROH AL MUHIBBIN</h3>
+                        <h3 class="hadroh-title">HABSYI AL MUHIBBIN</h3>
                         <p class="summary">Seni musik Islami, lantunan selawat dan rebana.</p>
                         <span class="click-hint">Klik untuk materi & Galeri ➔</span>
                     </div>
@@ -504,21 +505,6 @@
                             <li><strong>Genjring (Rebana):</strong> Fondasi ritme utama.</li>
                             <li><strong>Bass Habsyi:</strong> Jantung dentuman musik.</li>
                         </ul>
-                    </div>
-                    <div class="detail-section">
-                        <h4>3. Galeri Kejuaraan & Penampilan</h4>
-                        <p>Berikut adalah potret prestasi dan penampilan memukau Hadroh Al Muhibbin:</p>
-                        <div class="gallery-grid">
-                            <div class="gallery-item">
-                                <img src="" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Tempat Foto<br>Juara 1'">
-                            </div>
-                            <div class="gallery-item">
-                                <img src="" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Tempat Foto<br>Penampilan Expo'">
-                            </div>
-                            <div class="gallery-item">
-                                <img src="" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Tempat Foto<br>Lomba Provinsi'">
-                            </div>
-                        </div>
                     </div>
                     <button class="close-btn" onclick="event.stopPropagation(); toggleCard(this.parentElement.parentElement)">Tutup ✖</button>
                 </div>
@@ -715,24 +701,24 @@
                 <div class="card-details">
                     <div class="detail-section">
                         <h4>Momen Keseruan Kami</h4>
-                        <p>Bukan cuma belajar agama, di ROHIS kita juga punya banyak kegiatan asyik seperti Mabit (Malam Bina Iman dan Taqwa), Rihlah (Jalan-jalan alam), dan Buka Puasa Bersama. Intip keseruannya di sini:</p>
+                        <p>Bukan cuma belajar agama, di ROHIS kita juga punya banyak Kegiatan asyik, seperti acara maulid nabi, isra'miraj, mengikuti event lomba, dan jalan jalan santai di alam:</p>
                         
                         <div class="gallery-grid">
                             <!-- Foto Dokumentasi 1 -->
                             <div class="gallery-item">
-                                <img src="foto_mabit.jpg" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Momen<br>Mabit & Kajian'">
+                                <img src="hadroh 1.jpeg" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Momen<br>Mabit & Kajian'">
                             </div>
                             <!-- Foto Dokumentasi 2 -->
                             <div class="gallery-item">
-                                <img src="foto_rihlah.jpg" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Keseruan<br>Rihlah Alam'">
+                                <img src="hadroh 2.jpeg" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Keseruan<br>Rihlah Alam'">
                             </div>
                             <!-- Foto Dokumentasi 3 -->
                             <div class="gallery-item">
-                                <img src="foto_bukber.jpg" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Buka Puasa<br>Bersama'">
+                                <img src="hadroh 3.jpg" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Buka Puasa<br>Bersama'">
                             </div>
                             <!-- Foto Dokumentasi 4 -->
                             <div class="gallery-item">
-                                <img src="foto_rapat.jpg" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Rapat /<br>Musyawarah'">
+                                <img src="hadroh  4.jpg" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Rapat /<br>Musyawarah'">
                             </div>
                         </div>
                     </div>
@@ -918,6 +904,60 @@
                 isSpinning = false;
             }, 4000); 
         }
+
+        // --- LOGIKA PINDAH KOTAK OTOMATIS TTS ---
+// --- LOGIKA PINDAH KOTAK OTOMATIS TTS (MENDATAR & MENURUN) ---
+        // 1. Kita daftarkan dulu jalur-jalur kotaknya!
+        const ttsPaths = [
+            ['c12', 'c13', 'c14', 'c15', 'c16'], // Jalur: ZAKAT (Mendatar)
+            ['c31', 'c32', 'c33', 'c34'],        // Jalur: IMAN (Mendatar)
+            ['c12', 'c22', 'c32', 'c42', 'c52', 'c62'], // Jalur: ZAMZAM (Menurun)
+            ['c16', 'c26', 'c36', 'c46', 'c56']  // Jalur: TAQWA (Menurun)
+        ];
+
+        let activePath = ttsPaths[0]; // Jalur default (ZAKAT)
+
+        const ttsInputs = document.querySelectorAll('.tts-cell');
+        
+        ttsInputs.forEach((input) => {
+            // Ketika kotak diklik/di-tap
+            input.addEventListener('focus', function() {
+                let possiblePaths = ttsPaths.filter(path => path.includes(this.id));
+                
+                // Jika jalur yang sedang aktif tidak melewati kotak ini, cari jalur baru
+                if (!activePath.includes(this.id)) {
+                    // Cerdas: Jika kotak ini adalah huruf pertama dari sebuah kata, prioritaskan kata itu!
+                    let startingPath = possiblePaths.find(path => path[0] === this.id);
+                    activePath = startingPath ? startingPath : possiblePaths[0];
+                }
+            });
+
+            // Ketika huruf diketik (Otomatis maju)
+            input.addEventListener('input', function() {
+                if (this.value.length === 1) {
+                    const currentIndex = activePath.indexOf(this.id);
+                    // Pindah ke kotak selanjutnya di jalur yang sama (jika ada)
+                    if (currentIndex !== -1 && currentIndex < activePath.length - 1) {
+                        document.getElementById(activePath[currentIndex + 1]).focus();
+                    }
+                }
+            });
+
+            // Ketika tombol Hapus / Backspace ditekan (Otomatis mundur & hapus)
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace') {
+                    if (this.value === '') {
+                        // Jika kotak sudah kosong, mundur dan langsung hapus kotak sebelumnya!
+                        const currentIndex = activePath.indexOf(this.id);
+                        if (currentIndex > 0) {
+                            const prevInput = document.getElementById(activePath[currentIndex - 1]);
+                            prevInput.focus();
+                            prevInput.value = ''; // Hapus isi kotak sebelumnya
+                        }
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>
