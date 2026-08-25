@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expo Rohis SMAN 1 Gegesik</title>
+    <style>
+        /* Mengatur Font dan Reset Dasar */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f0f8ff; 
+            /* Menambahkan motif geometric pattern tipis bergaya islami */
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232563eb' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Bagian Header / Atas - Gradasi Biru */
+        header {
+            background: linear-gradient(135deg, #0a3d91, #2563eb);
+            color: white;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 15px rgba(10, 61, 145, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Ornamen Lingkaran Cahaya di Header */
+        header::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        header::before {
+            content: '✨';
+            position: absolute;
+            top: 20px;
+            left: 120px;
+            font-size: 2rem;
+            opacity: 0.3;
+            z-index: 1;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.6; }
+            100% { transform: scale(1); opacity: 0.3; }
+        }
+
+        .logo-placeholder {
+            width: 90px;
+            height: 90px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 3px solid #fbbf24; 
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            color: #0a3d91;
+            font-weight: bold;
+            text-align: center;
+            overflow: hidden;
+            flex-shrink: 0;
+            z-index: 2;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .logo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .header-title {
+            text-align: center;
+            flex-grow: 1;
+            padding: 0 15px;
+            z-index: 2;
+        }
+
+        .header-title h1 {
+            font-size: 2.8rem;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .header-title p {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: #e0f2fe;
+        }
+
+        /* Bagian Konten Utama */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Section Penjelasan Utama ROHIS */
+        .about-rohis {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.08);
+            border-top: 5px solid #2563eb;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Watermark Simbol Rohis di Background Kartu */
+        .about-rohis::before {
+            content: '🕌';
+            position: absolute;
+            font-size: 180px;
+            opacity: 0.04;
+            right: -20px;
+            bottom: -40px;
+            z-index: -1;
+        }
+        
+        .about-rohis::after {
+            content: '🌙';
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.04;
+            left: 10px;
+            top: -10px;
+            transform: rotate(-15deg);
+            z-index: -1;
+        }
+
+        .about-rohis h2 {
+            color: #0a3d91;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #0a3d91;
+            margin: 40px 0 20px 0;
+            font-size: 2rem;
+            border-bottom: 3px dashed #bfdbfe;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-center {
+            text-align: center;
+        }
+
+        /* Grid Cards */
+        .divisions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            align-items: start;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(10, 61, 145, 0.08);
+            border-bottom: 5px solid #fbbf24;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .card::after {
+            content: '✨';
+            position: absolute;
+            font-size: 80px;
+            opacity: 0.02;
+            bottom: -10px;
+            right: -10px;
+            z-index: -1;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(10, 61, 145, 0.15);
+        }
+
+        .card.expanded {
+            grid-column: 1 / -1;
+            text-align: left;
+            transform: translateY(0);
+            cursor: default;
+            border-bottom: 5px solid #2563eb;
+        }
+
+        .card-front {
+            transition: all 0.3s ease;
+        }
+
+        .card.expanded .card-front {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 2px dashed #bfdbfe;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card.expanded .card-front h3 {
+            margin-bottom: 0;
+            font-size: 2rem;
+        }
+
+        .card.expanded .card-front p.summary { display: none; }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .card h3 { color: #0a3d91; font-size: 1.6rem; margin-bottom: 15px; }
+        .hadroh-title { color: #d97706 !important; }
+        p.summary { font-size: 0.95rem; color: #666; margin-bottom: 20px; }
+
+        .click-hint {
+            display: inline-block;
+            background-color: #dbeafe; 
+            color: #1e3a8a; 
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .card:hover .click-hint { background-color: #2563eb; color: white; }
+        .card.expanded .click-hint { display: none; }
+
+        .card-details {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.7s ease-in-out;
+        }
+
+        .card.expanded .card-details { max-height: 4000px; opacity: 1; }
+
+        .detail-section { margin-bottom: 20px; }
+        .detail-section h4 {
+            color: #0a3d91; font-size: 1.25rem; margin-bottom: 10px;
+            display: flex; align-items: center; gap: 8px;
+            border-left: 4px solid #fbbf24; padding-left: 10px;
+        }
+
+        .detail-section p, .detail-section ul { color: #444; font-size: 1rem; margin-left: 20px; }
+        .detail-section ul { padding-left: 20px; }
+        .detail-section li { margin-bottom: 8px; }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+
+        .gallery-item {
+            width: 100%;
+            height: 150px;
+            background-color: #e2e8f0;
+            border: 2px dashed #94a3b8;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #64748b;
+            font-size: 0.9rem;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0; left: 0;
+        }
+
+        /* Kuis & TTS Styles */
+        .quiz-question { margin-bottom: 15px; background: #f8fafc; padding: 15px; border-radius: 8px; border-left: 3px solid #bfdbfe; }
+        .quiz-question p { font-weight: 600; color: #1e3a8a; margin-bottom: 10px; margin-left: 0; }
+        .quiz-question label { display: block; margin-bottom: 5px; cursor: pointer; font-size: 0.95rem; }
+        
+        .action-btn {
+            background: #2563eb; color: white; border: none; padding: 10px 20px;
+            border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .action-btn:hover { background: #1d4ed8; }
+        
+        #quiz-result, #tts-result {
+            margin-top: 20px; font-weight: bold; font-size: 1.2rem; color: #d97706; display: none;
+            background: #fef3c7; padding: 15px; border-radius: 8px; text-align: center;
+        }
+
+        /* TTS Grid */
+        .tts-wrapper { display: flex; justify-content: center; margin: 20px 0; }
+        .tts-board {
+            display: grid;
+            gap: 2px;
+            background: #0a3d91;
+            padding: 4px;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .tts-cell {
+            width: 40px; height: 40px; text-align: center; font-size: 1.2rem;
+            font-weight: bold; text-transform: uppercase; border: none; outline: none;
+        }
+        .tts-empty { background: transparent; pointer-events: none; }
+        .tts-clues { margin-top: 20px; background: #eff6ff; padding: 15px; border-radius: 8px; }
+        .tts-clues h5 { color: #0a3d91; margin-bottom: 5px; display: flex; align-items: center; gap: 5px;}
+
+        .close-btn {
+            display: none; background: #ef4444; color: white; border: none;
+            padding: 10px 25px; border-radius: 8px; cursor: pointer; font-weight: bold;
+            margin-top: 15px; float: right; transition: background 0.3s;
+        }
+        .close-btn:hover { background: #dc2626; }
+        .card.expanded .close-btn { display: inline-block; }
+
+        /* Styles untuk Roda Spinner (Wheel of Fortune) */
+        .wheel-wrapper {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 20px auto;
+        }
+        .wheel-pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            color: #ef4444; 
+            z-index: 10;
+            text-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .wheel-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 5px solid #0a3d91;
+            position: relative;
+            overflow: hidden;
+            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); 
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+        .wheel-number {
+            position: absolute;
+            top: 0; 
+            left: 50%;
+            transform-origin: 50% 120px; 
+            width: 40px;
+            margin-left: -20px;
+            text-align: center;
+            padding-top: 10px;
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            z-index: 2;
+        }
+        .spinner-result {
+            background: #eff6ff;
+            color: #1e3a8a;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px auto 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #bfdbfe;
+        }
+
+        footer { text-align: center; padding: 25px; background-color: #0a3d91; color: #bfdbfe; margin-top: 50px; }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; padding: 20px 10px; }
+            .header-title h1 { font-size: 2rem; }
+            .card.expanded .card-front { flex-direction: column; text-align: center; }
+            .card.expanded { grid-column: span 1; }
+            .detail-section p, .detail-section ul, .gallery-grid { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-placeholder">
+            <img src="sekolah.jpg" alt="Logo Neges" onerror="this.style.display='none'; this.parentNode.innerHTML='LOGO<br>SMAN 1'">
+        </div>
+        <div class="header-title">
+            <h1>ROHIS SMAN 1 GEGESIK</h1>
+            <p>Membentuk Generasi Islami, Berprestasi, dan Berakhlak Mulia</p>
+        </div>
+        <div class="logo-placeholder">
+            <img src="habsyi.jpg" alt="Logo Hadroh Al Muhibbin" onerror="this.style.display='none'; this.parentNode.innerHTML='LOGO<br>HADROH'">
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="about-rohis">
+            <h2>✨ Apa itu ROHIS? ✨</h2>
+            <p><strong>Rohani Islam (ROHIS) SMAN 1 Gegesik</strong> adalah organisasi ekstrakurikuler pusat yang menjadi wadah pembinaan keislaman bagi siswa-siswi. Kami berfokus pada perbaikan akhlak, pendalaman ilmu agama, serta merajut <em>ukhuwah islamiyah</em> di lingkungan sekolah yang asyik dan kekinian. ROHIS menaungi <strong>3 Divisi Utama</strong> yang bisa kamu pilih sesuai minat!</p>
+        </div>
+
+        <!-- DIVISI ROHIS -->
+        <div class="divisions">
+            
+            <!-- KARTU 1: DKM -->
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-front">
+                    <div class="card-icon">🕌</div>
+                    <div>
+                        <h3>DKM</h3>
+                        <p class="summary">Dewan Kemakmuran Masjid. Pusat penggerak ibadah.</p>
+                        <span class="click-hint">Klik untuk detail ➔</span>
+                    </div>
+                </div>
+                <div class="card-details">
+                    <div class="detail-section">
+                        <h4>Pengertian</h4>
+                        <p>DKM adalah divisi yang bertanggung jawab memakmurkan masjid sekolah dan memastikan kegiatan ibadah berjalan lancar.</p>
+                    </div>
+                    <div class="detail-section">
+                        <h4>Isi Kegiatan</h4>
+                        <ul>
+                            <li><strong>Petugas Sholat Jumat:</strong> Melatih Muadzin, Bilal, dan MC Sholat Jumat.</li>
+                            <li><strong>Pengajar Keputrian:</strong> Mengisi materi keislaman khusus siswi.</li>
+                            <li><strong>Imam Sholat:</strong> Mengkoordinir sholat Dzuhur dan Ashar berjamaah.</li>
+                        </ul>
+                    </div>
+                    <button class="close-btn" onclick="event.stopPropagation(); toggleCard(this.parentElement.parentElement)">Tutup ✖</button>
+                </div>
+            </div>
+
+            <!-- KARTU 2: HADROH -->
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-front">
+                    <div class="card-icon">🥁</div>
+                    <div>
+                        <h3 class="hadroh-title">HADROH AL MUHIBBIN</h3>
+                        <p class="summary">Seni musik Islami, lantunan selawat dan rebana.</p>
+                        <span class="click-hint">Klik untuk materi & Galeri ➔</span>
+                    </div>
+                </div>
+                <div class="card-details">
+                    <div class="detail-section">
+                        <h4>1. Pengertian Hadroh</h4>
+                        <p>Seni musik Islami yang memadukan rebana dengan selawat. Wadah menyalurkan bakat seni sekaligus memperdalam nilai agama.</p>
+                    </div>
+                    <div class="detail-section">
+                        <h4>2. Alat Musik</h4>
+                        <ul>
+                            <li><strong>Darbuka:</strong> Pengatur tempo (dirijen).</li>
+                            <li><strong>Genjring (Rebana):</strong> Fondasi ritme utama.</li>
+                            <li><strong>Bass Habsyi:</strong> Jantung dentuman musik.</li>
+                        </ul>
+                    </div>
+                    <div class="detail-section">
+                        <h4>3. Galeri Kejuaraan & Penampilan</h4>
+                        <p>Berikut adalah potret prestasi dan penampilan memukau Hadroh Al Muhibbin:</p>
+                        <div class="gallery-grid">
+                            <div class="gallery-item">
+                                <img src="" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Tempat Foto<br>Juara 1'">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Tempat Foto<br>Penampilan Expo'">
+                            </div>
+                            <div class="gallery-item">
+                                <img src="" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Tempat Foto<br>Lomba Provinsi'">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="close-btn" onclick="event.stopPropagation(); toggleCard(this.parentElement.parentElement)">Tutup ✖</button>
+                </div>
+            </div>
+
+            <!-- KARTU 3: BAZIS -->
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-front">
+                    <div class="card-icon">🤝</div>
+                    <div>
+                        <h3>BAZIS</h3>
+                        <p class="summary">Badan Zakat Infaq Siswa. Aksi nyata kepedulian sosial.</p>
+                        <span class="click-hint">Klik untuk detail ➔</span>
+                    </div>
+                </div>
+                <div class="card-details">
+                    <div class="detail-section">
+                        <h4>Pengertian</h4>
+                        <p>Divisi yang bergerak di bidang sosial kemanusiaan untuk menumbuhkan jiwa empati siswa melalui pengelolaan dana sosial.</p>
+                    </div>
+                    <div class="detail-section">
+                        <h4>Isi Kegiatan</h4>
+                        <ul>
+                            <li><strong>Kencleng Jumat:</strong> Mengedarkan kotak infaq rutin.</li>
+                            <li><strong>Zakat Fitrah:</strong> Panitia amil zakat di bulan Ramadhan.</li>
+                            <li><strong>Santunan Yatim:</strong> Menyalurkan dana bantuan pendidikan/sembako.</li>
+                        </ul>
+                    </div>
+                    <button class="close-btn" onclick="event.stopPropagation(); toggleCard(this.parentElement.parentElement)">Tutup ✖</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ZONA INTERAKTIF -->
+        <div class="section-center">
+            <h2 class="section-title">🎯 Zona Interaktif 🎯</h2>
+        </div>
+        
+        <div class="divisions">
+            <!-- KARTU SPINNER RODA TANTANGAN -->
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-front">
+                    <div class="card-icon">🎡</div>
+                    <div>
+                        <h3>Roda Tantangan</h3>
+                        <p class="summary">Putar rodanya, jawab pertanyaannya, dan klaim hadiah snack-mu!</p>
+                        <span class="click-hint">Mainkan ➔</span>
+                    </div>
+                </div>
+                <div class="card-details" onclick="event.stopPropagation();">
+                    <div class="detail-section" style="text-align: center;">
+                        <h4>Gacha Tantangan Rohis</h4>
+                        <p>Klik tombol SPIN, roda akan berputar. Jawab tantangan yang muncul dan laporkan ke kakak panitia di <em>booth</em>! 🍿</p>
+                        
+                        <!-- Area Roda Berputar -->
+                        <div class="wheel-wrapper">
+                            <div class="wheel-pointer">▼</div>
+                            <div class="wheel-circle" id="wheel-circle">
+                                <!-- Potongan roda akan dibuat otomatis oleh JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <!-- Kotak Hasil -->
+                        <div id="wheel-result" class="spinner-result">❓ Klik putar roda untuk mulai! ❓</div>
+                        
+                        <button type="button" class="action-btn" id="spin-btn" onclick="spinWheel()">PUTAR RODA SEKARANG! 🎰</button>
+                    </div>
+                    <button class="close-btn" onclick="toggleCard(this.parentElement.parentElement)">Tutup ✖</button>
+                </div>
+            </div>
+
+            <!-- KARTU KUIS -->
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-front">
+                    <div class="card-icon">📖</div>
+                    <div>
+                        <h3>Trivia Islam</h3>
+                        <p class="summary">Tes wawasan keislamanmu dengan fakta-fakta unik ini!</p>
+                        <span class="click-hint">Mulai Kuis ➔</span>
+                    </div>
+                </div>
+                <div class="card-details" onclick="event.stopPropagation();">
+                    <div class="detail-section">
+                        <h4>Jawab dengan cermat!</h4>
+                        <form id="kuisForm">
+                            <div id="kuis-container"></div>
+                            <button type="button" class="action-btn" onclick="hitungKuis()">Cek Hasilnya! 🚀</button>
+                        </form>
+                        <div id="quiz-result"></div>
+                    </div>
+                    <button class="close-btn" onclick="toggleCard(this.parentElement.parentElement)">Tutup ✖</button>
+                </div>
+            </div>
+
+            <!-- KARTU TTS -->
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-front">
+                    <div class="card-icon">🧩</div>
+                    <div>
+                        <h3>Mini TTS Islami</h3>
+                        <p class="summary">Asah otakmu dengan menebak istilah Islam ini.</p>
+                        <span class="click-hint">Mainkan TTS ➔</span>
+                    </div>
+                </div>
+                <div class="card-details" onclick="event.stopPropagation();">
+                    <div class="detail-section">
+                        <h4>Teka-Teki Silang</h4>
+                        <p>Isi kotak di bawah ini sesuai dengan petunjuk!</p>
+                        
+                        <div class="tts-wrapper">
+                            <div class="tts-board" style="grid-template-columns: repeat(6, 40px); grid-template-rows: repeat(6, 40px);">
+                                <!-- Baris 1: Z A K A T -->
+                                <div class="tts-cell tts-empty"></div>
+                                <input type="text" maxlength="1" class="tts-cell" id="c12" title="Mendatar 1 / Menurun 1">
+                                <input type="text" maxlength="1" class="tts-cell" id="c13">
+                                <input type="text" maxlength="1" class="tts-cell" id="c14">
+                                <input type="text" maxlength="1" class="tts-cell" id="c15">
+                                <input type="text" maxlength="1" class="tts-cell" id="c16" title="Menurun 2">
+
+                                <!-- Baris 2: Z (menurun), A (menurun) -->
+                                <div class="tts-cell tts-empty"></div>
+                                <input type="text" maxlength="1" class="tts-cell" id="c22">
+                                <div class="tts-cell tts-empty"></div>
+                                <div class="tts-cell tts-empty"></div>
+                                <div class="tts-cell tts-empty"></div>
+                                <input type="text" maxlength="1" class="tts-cell" id="c26">
+
+                                <!-- Baris 3: I M A N (mendatar), M (menurun), Q (menurun) -->
+                                <input type="text" maxlength="1" class="tts-cell" id="c31" title="Mendatar 2">
+                                <input type="text" maxlength="1" class="tts-cell" id="c32">
+                                <input type="text" maxlength="1" class="tts-cell" id="c33">
+                                <input type="text" maxlength="1" class="tts-cell" id="c34">
+                                <div class="tts-cell tts-empty"></div>
+                                <input type="text" maxlength="1" class="tts-cell" id="c36">
+
+                                <!-- Baris 4: Z (menurun), W (menurun) -->
+                                <div class="tts-cell tts-empty"></div>
+                                <input type="text" maxlength="1" class="tts-cell" id="c42">
+                                <div class="tts-cell tts-empty"></div>
+                                <div class="tts-cell tts-empty"></div>
+                                <div class="tts-cell tts-empty"></div>
+                                <input type="text" maxlength="1" class="tts-cell" id="c46">
+
+                                <!-- Baris 5: A (menurun), A (menurun) -->
+                                <div class="tts-cell tts-empty"></div>
+                                <input type="text" maxlength="1" class="tts-cell" id="c52">
+                                <div class="tts-cell tts-empty"></div>
+                                <div class="tts-cell tts-empty"></div>
+                                <div class="tts-cell tts-empty"></div>
+                                <input type="text" maxlength="1" class="tts-cell" id="c56">
+
+                                <!-- Baris 6: M (menurun) -->
+                                <div class="tts-cell tts-empty"></div>
+                                <input type="text" maxlength="1" class="tts-cell" id="c62">
+                                <div class="tts-cell tts-empty"></div>
+                                <div class="tts-cell tts-empty"></div>
+                                <div class="tts-cell tts-empty"></div>
+                                <div class="tts-cell tts-empty"></div>
+                            </div>
+                        </div>
+
+                        <div class="tts-clues">
+                            <h5>➡️ Mendatar:</h5>
+                            <ol>
+                                <li>Kewajiban menyisihkan sebagian harta bagi umat Islam. (5 Huruf)</li>
+                                <li>Meyakini dalam hati, mengucapkan dengan lisan, dan mengamalkan dengan perbuatan. (4 Huruf)</li>
+                            </ol>
+                            <h5 style="margin-top:10px;">⬇️ Menurun:</h5>
+                            <ol>
+                                <li>Air suci penuh berkah peninggalan Nabi Ismail AS. (6 Huruf)</li>
+                                <li>Menjalankan perintah Allah dan menjauhi larangan-Nya. (5 Huruf)</li>
+                            </ol>
+                        </div>
+
+                        <button type="button" class="action-btn" onclick="cekTTS()">Cek Jawaban TTS 🎯</button>
+                        <div id="tts-result"></div>
+
+                    </div>
+                    <button class="close-btn" onclick="toggleCard(this.parentElement.parentElement)">Tutup ✖</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- KARTU 4: DOKUMENTASI & GALERI -->
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-front">
+                    <div class="card-icon">📸</div>
+                    <div>
+                        <h3>DOKUMENTASI</h3>
+                        <p class="summary">Potret keseruan, kajian, dan kebersamaan keluarga ROHIS.</p>
+                        <span class="click-hint">Lihat Galeri ➔</span>
+                    </div>
+                </div>
+                <div class="card-details">
+                    <div class="detail-section">
+                        <h4>Momen Keseruan Kami</h4>
+                        <p>Bukan cuma belajar agama, di ROHIS kita juga punya banyak kegiatan asyik seperti Mabit (Malam Bina Iman dan Taqwa), Rihlah (Jalan-jalan alam), dan Buka Puasa Bersama. Intip keseruannya di sini:</p>
+                        
+                        <div class="gallery-grid">
+                            <!-- Foto Dokumentasi 1 -->
+                            <div class="gallery-item">
+                                <img src="foto_mabit.jpg" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Momen<br>Mabit & Kajian'">
+                            </div>
+                            <!-- Foto Dokumentasi 2 -->
+                            <div class="gallery-item">
+                                <img src="foto_rihlah.jpg" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Keseruan<br>Rihlah Alam'">
+                            </div>
+                            <!-- Foto Dokumentasi 3 -->
+                            <div class="gallery-item">
+                                <img src="foto_bukber.jpg" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Buka Puasa<br>Bersama'">
+                            </div>
+                            <!-- Foto Dokumentasi 4 -->
+                            <div class="gallery-item">
+                                <img src="foto_rapat.jpg" alt="" onerror="this.style.display='none'; this.parentNode.innerHTML='<br>Rapat /<br>Musyawarah'">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="close-btn" onclick="event.stopPropagation(); toggleCard(this.parentElement.parentElement)">Tutup ✖</button>
+                </div>
+            </div>
+
+    </div>
+
+    <footer>
+        <p>✨ &copy; 2026 Rohis SMAN 1 Gegesik ✨<br>Divisi: DKM - HADROH - BAZIS</p>
+    </footer>
+
+    <script>
+        // --- LOGIKA KARTU MEMBENTANG ---
+        function toggleCard(clickedCard) {
+            const isAlreadyExpanded = clickedCard.classList.contains('expanded');
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(card => card.classList.remove('expanded'));
+
+            if (!isAlreadyExpanded) {
+                clickedCard.classList.add('expanded');
+                setTimeout(() => {
+                    clickedCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 350);
+            }
+        }
+
+        // --- LOGIKA KUIS PENGETAHUAN ISLAM ---
+        const questions = [
+            { q: "1. Surat apa dalam Al-Qur'an yang TIDAK diawali dengan bacaan Basmalah?", options: [{t:"Surat Al-Anfal", v:0}, {t:"Surat At-Taubah", v:1}, {t:"Surat An-Naml", v:0}] },
+            { q: "2. Siapakah satu-satunya nama Sahabat Nabi yang disebutkan secara tersurat namanya di dalam Al-Qur'an?", options: [{t:"Zaid bin Haritsah", v:1}, {t:"Abu Bakar Ash-Shiddiq", v:0}, {t:"Ali bin Abi Thalib", v:0}] },
+            { q: "3. Siapakah Nabi yang pertama kali menulis menggunakan pena?", options: [{t:"Nabi Sulaiman AS", v:0}, {t:"Nabi Ibrahim AS", v:0}, {t:"Nabi Idris AS", v:1}] },
+            { q: "4. Ayat terpanjang dalam Al-Qur'an (Al-Baqarah 282) membahas tentang apa?", options: [{t:"Hukum Puasa", v:0}, {t:"Hukum Hutang Piutang", v:1}, {t:"Kisah Hari Kiamat", v:0}] },
+            { q: "5. Siapakah satu-satunya nama perempuan yang disebutkan secara langsung (tersurat) dalam Al-Qur'an?", options: [{t:"Siti Hajar", v:0}, {t:"Maryam binti Imran", v:1}, {t:"Fatimah az-Zahra", v:0}] }
+        ];
+
+        const kuisContainer = document.getElementById('kuis-container');
+        let kuisHTML = "";
+        questions.forEach((item, index) => {
+            kuisHTML += `<div class="quiz-question"><p>${item.q}</p>`;
+            let shuffledOptions = item.options.sort(() => Math.random() - 0.5);
+            shuffledOptions.forEach((opt) => {
+                kuisHTML += `<label><input type="radio" name="q${index}" value="${opt.v}"> ${opt.t}</label>`;
+            });
+            kuisHTML += `</div>`;
+        });
+        kuisContainer.innerHTML = kuisHTML;
+
+        function hitungKuis() {
+            let totalBenar = 0;
+            let terjawab = 0;
+            for(let i=0; i<questions.length; i++) {
+                let radios = document.getElementsByName(`q${i}`);
+                for(let j=0; j<radios.length; j++) {
+                    if(radios[j].checked) {
+                        totalBenar += parseInt(radios[j].value);
+                        terjawab++;
+                        break;
+                    }
+                }
+            }
+            
+            let resDiv = document.getElementById('quiz-result');
+            if(terjawab < questions.length) {
+                resDiv.style.display = 'block';
+                resDiv.style.color = 'red';
+                resDiv.innerHTML = "Ups! Jawab semua pertanyaan dulu ya biar bisa cek skornya.";
+                return;
+            }
+
+            let pesan = "";
+            if(totalBenar === 5) pesan = "Masya Allah, Wawasan Islam-mu setingkat suhu! Keren banget!";
+            else if(totalBenar >= 3) pesan = "Alhamdulillah, pengetahuanmu lumayan luas. Yuk gabung ROHIS biar makin pro!";
+            else pesan = "Wah, sepertinya banyak fakta baru yang kamu tahu hari ini. Gabung ROHIS yuk biar kita belajar bareng!";
+
+            resDiv.style.display = 'block';
+            resDiv.style.color = '#d97706';
+            resDiv.innerHTML = `Skor Kamu: ${totalBenar} dari ${questions.length} Benar!<br><br>${pesan}`;
+        }
+
+        // --- LOGIKA TTS ---
+        function cekTTS() {
+            const ans = {
+                c12:'Z', c13:'A', c14:'K', c15:'A', c16:'T',
+                c22:'A', c26:'A',
+                c31:'I', c32:'M', c33:'A', c34:'N', c36:'Q',
+                c42:'Z', c46:'W',
+                c52:'A', c56:'A',
+                c62:'M'
+            };
+            
+            let benar = true;
+            for(let key in ans) {
+                let el = document.getElementById(key);
+                if(el) {
+                    let val = el.value.toUpperCase();
+                    if(val !== ans[key]) {
+                        benar = false;
+                        break;
+                    }
+                }
+            }
+
+            let resDiv = document.getElementById('tts-result');
+            resDiv.style.display = 'block';
+            if(benar) {
+                resDiv.innerHTML = "🎉 Luar Biasa! Semua jawaban TTS kamu BENAR! 🎉";
+                resDiv.style.color = "#16a34a";
+            } else {
+                resDiv.innerHTML = "Hmm.. Masih ada yang kurang tepat/kosong. Coba cek lagi ya!";
+                resDiv.style.color = "#dc2626";
+            }
+        }
+
+        // --- LOGIKA RODA SPINNER ---
+        const tantanganArray = [
+            "Bacakan ayat terakhir Surat Al-A'la! (Suhufi Ibraahiima wamuusaa)",
+            "Sebutkan 7 macam air yang suci dan mensucikan!",
+            "Sebutkan 4 sifat wajib bagi Rasul beserta artinya!",
+            "Sambung ayat ini: 'Innal insaana lafii khusr...'",
+            "Praktik: Coba lafalkan niat Sholat Dhuha!",
+            "Siapakah malaikat yang bertugas meniup sangkakala?",
+            "Sebutkan 5 Rukun Islam secara berurutan!",
+            "Siapakah Khulafaur Rasyidin yang ketiga?",
+            "Sebutkan salah satu mukjizat Nabi Musa AS!",
+            "Praktik: Kumandangkan azan! (Minimal sampai Hayya 'alash-shalaah)",
+            "Apa arti dari nama surat 'Al-Kautsar'?",
+            "Sebutkan 3 Rukun Wudhu yang kamu ketahui!",
+            "Siapakah paman Nabi Muhammad SAW yang terkenal sangat memusuhinya?",
+            "Siapakah sahabat Nabi yang diberi gelar 'Pedang Allah yang Terhunus'?",
+            "Bacakan doa setelah selesai wudhu dengan lancar!"
+        ];
+
+        const wheelCircle = document.getElementById('wheel-circle');
+        const numSlices = tantanganArray.length;
+        const sliceAngle = 360 / numSlices;
+        
+        const bgColors = ['#0a3d91', '#d97706', '#2563eb']; 
+        let conicGradient = 'conic-gradient(';
+        
+        for(let i = 0; i < numSlices; i++) {
+            let startAngle = i * sliceAngle;
+            let endAngle = startAngle + sliceAngle;
+            let color = bgColors[i % 3]; 
+            
+            conicGradient += `${color} ${startAngle}deg ${endAngle}deg${i === numSlices - 1 ? '' : ', '}`;
+            
+            let span = document.createElement('span');
+            span.className = 'wheel-number';
+            span.innerText = i + 1;
+            span.style.transform = `rotate(${startAngle + sliceAngle / 2}deg)`; 
+            wheelCircle.appendChild(span);
+        }
+        conicGradient += ')';
+        wheelCircle.style.background = conicGradient; 
+
+        let currentRotation = 0;
+        let isSpinning = false;
+
+        function spinWheel() {
+            if(isSpinning) return; 
+            isSpinning = true;
+            
+            const btn = document.getElementById('spin-btn');
+            const resultBox = document.getElementById('wheel-result');
+            
+            btn.innerHTML = "MEMUTAR... ⏳";
+            resultBox.innerHTML = "Rodanya lagi muter nih... 🌀";
+            
+            let randomSlice = Math.floor(Math.random() * numSlices);
+            
+            let targetAngle = 360 - (randomSlice * sliceAngle + sliceAngle / 2);
+            let baseRotation = Math.floor(currentRotation / 360) * 360; 
+            
+            currentRotation = baseRotation + (5 * 360) + targetAngle; 
+            
+            wheelCircle.style.transform = `rotate(${currentRotation}deg)`;
+            
+            setTimeout(() => {
+                resultBox.innerHTML = `<strong>🎉 DAPAT TANTANGAN NOMOR ${randomSlice + 1} 🎉</strong><br><br>${tantanganArray[randomSlice]}`;
+                btn.innerHTML = "PUTAR LAGI! 🎰";
+                isSpinning = false;
+            }, 4000); 
+        }
+    </script>
+</body>
+</html>
